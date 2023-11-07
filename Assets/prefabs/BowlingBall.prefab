@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2409842599651584324}
   - component: {fileID: 2409842599651584328}
   m_Layer: 0
-  m_Name: bowling ball
+  m_Name: BowlingBall
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

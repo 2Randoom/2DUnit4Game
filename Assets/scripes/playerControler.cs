@@ -10,6 +10,7 @@ public class playerControler : MonoBehaviour
     public float speed;
     public float jumpForce;
     private bool isOnGround = true;
+
     private bool hasPowerUP = false;
     private float powerupStrength = 15.0f;
 
@@ -26,13 +27,23 @@ public class playerControler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)&& isOnGround)
         {
             PlayerRB.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
-            isOnGround = false;
+            if (!hasPowerUP)
+            {
+                isOnGround = false;
+            }
+                
+                    
         }
     }
     private void FixedUpdate()
     {
         float horizontalMovment = Input.GetAxis("Horizontal");
         PlayerRB.AddForce(Vector2.right * speed * horizontalMovment);
+
+        if (transform.position.y < -10)
+        {
+            Destroy(gameObject);
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -46,13 +57,26 @@ public class playerControler : MonoBehaviour
             hasPowerUP = true;
             Destroy(other.gameObject);
             Debug.Log("POWER UP!");
+            isOnGround = true;
+            //COROUTINE
+            StartCoroutine("PowerUpCoolDown");
         }
     }
+
+    //MAKE COROUTINE
+    IEnumerator PowerUpCoolDown()
+    {
+        yield return new WaitForSeconds(5);
+        hasPowerUP = false;
+        isOnGround = false;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground")&& hasPowerUP)
-        {
-           // Rigidbody2D bowlingBall
-        }
+    
+
+       
+     
     }
+    
 }

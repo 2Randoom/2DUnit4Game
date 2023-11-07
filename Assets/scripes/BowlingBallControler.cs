@@ -15,8 +15,13 @@ public class BowlingBallControler : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         BowlingBallRb.AddForce((Player.transform.position - transform.position).normalized * Speed);
+
+        if(transform.position.y < -10)
+        {
+            Destroy(gameObject);
+        }
     }
 }
