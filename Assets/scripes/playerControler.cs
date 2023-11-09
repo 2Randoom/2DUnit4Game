@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerControler : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class playerControler : MonoBehaviour
     public float speed;
     public float jumpForce;
     private bool isOnGround = true;
+    public bool CanJump = true;
 
     private bool hasPowerUP = false;
     private float powerupStrength = 15.0f;
@@ -30,9 +32,17 @@ public class playerControler : MonoBehaviour
             if (!hasPowerUP)
             {
                 isOnGround = false;
+                
             }
                 
                     
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            PlayerRB.AddForce(Vector2.down * jumpForce, ForceMode2D.Impulse);
+          
+
         }
     }
     private void FixedUpdate()
@@ -42,7 +52,8 @@ public class playerControler : MonoBehaviour
 
         if (transform.position.y < -10)
         {
-            Destroy(gameObject);
+           
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -73,10 +84,7 @@ public class playerControler : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-    
-
        
-     
     }
     
 }
